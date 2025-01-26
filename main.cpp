@@ -192,7 +192,14 @@ int main()
         glUseProgram(shaderProgram);
 
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        float cycleTime = sin(glfwGetTime());
+
+        // camera movement...
+        double mousePosX, mousePosY;
+        glfwGetCursorPos(window, &mousePosX, &mousePosY);
+        GLint mouse_position_location = glGetUniformLocation(shaderProgram, "u_mouse_position");
+        glUniform2f(mouse_position_location, (GLfloat)mousePosX, (GLfloat)mousePosY);
+
+        float cycleTime = glfwGetTime();
         GLint timeUniformLocation = glGetUniformLocation(shaderProgram, "time");
         glUniform1f(timeUniformLocation, cycleTime);
 
